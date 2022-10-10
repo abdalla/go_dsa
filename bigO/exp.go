@@ -7,6 +7,7 @@ func Exponential(list []string) int {
 
 	//O(n)
 	for _, current := range list {
+		//O(n)
 		for _, nasted := range list {
 			fmt.Println(current, nasted) //O(nˆ2)
 			total += 1                   //O(nˆ2)
