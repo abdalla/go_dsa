@@ -14,5 +14,5 @@ func main() {
 	bigo.BigOn(studentlist1) //O(N)
 	bigo.BigO1(studentlist2) //O(2)
 
-	countingoperations.Counter(studentlist2) //O(6 + 2n) ==> O(n)
+	countingoperations.Counter(studentlist2) //O(6 + 2n) ==> O(n) ==> Rule 3: removed unecessary constant
 }
