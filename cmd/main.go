@@ -1,8 +1,9 @@
 package main
 
 import (
+	"fmt"
+
 	bigo "github.com/abdalla/go_dsa/bigO"
-	"github.com/abdalla/go_dsa/bigO/countingoperations"
 )
 
 var (
@@ -11,8 +12,14 @@ var (
 )
 
 func main() {
-	bigo.BigOn(studentlist1) //O(N)
-	bigo.BigO1(studentlist2) //O(2)
+	// bigo.BigOn(studentlist1) //O(N)
+	// bigo.BigO1(studentlist2) //O(2)
 
-	countingoperations.Counter(studentlist2) //O(6 + 2n) ==> O(n) ==> Rule 3: removed unecessary constant
+	// countingoperations.Counter(studentlist2) //O(6 + 2n) ==> O(n) ==> Rule 3: removed unecessary constant
+
+	total := bigo.NM(studentlist1, studentlist2) //O(n + m)
+
+	// total := bigo.Exponential(studentlist2) //O(n^ 2)
+
+	fmt.Println(total) //O(1)
 }
