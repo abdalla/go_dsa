@@ -23,7 +23,7 @@ The main focus is to calculate the amount of work we do or the mumber of compari
 
 	* n tend to infinity
 
-	* n --> ♾️
+	* n ==> ♾️
 	
 2. Considering Worst Case Scenario
 
@@ -34,3 +34,5 @@ The main focus is to calculate the amount of work we do or the mumber of compari
 	* O(n + m)
 
 5. Remove all non-dominants
+	* O(4 + n + 2nˆ2)  ==> [RULE 4] O(n + 2nˆ2) ==> [RULE 5] O(2nˆ2) ==> [RULE 4] O(nˆ2)
+	* O(3nˆ2 + 3n + 500)  ==> O(nˆ2)
