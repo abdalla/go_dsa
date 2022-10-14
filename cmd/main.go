@@ -38,9 +38,11 @@ func main() {
 
 	// slice := generateSlice(50)
 	slice := []int{4, 1, 5, 8, 9, 3, 10, 2, 6, 7, 4, 4, 3, 2, 1, 9, 10}
-	sorted := sort.MergeSort(slice)
+	fmt.Println("======= MERGE SORT =========")
 	fmt.Println("\n ---> unsorted <--- \n\n", slice)
-	fmt.Println("\n --->  sorted  <---\n\n", sorted)
-	fmt.Println("\n --->  COUNTER = ", len(sorted))
+	fmt.Println("\n --->  sorted  <---\n\n", sort.MergeSort(slice))
 
+	fmt.Println("\n\n ======= INSERTION SORT =========")
+	fmt.Println("\n ---> unsorted <--- \n\n", slice)
+	fmt.Println("\n --->  sorted  <---\n\n", sort.InsertionSort(slice))
 }
