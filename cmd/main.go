@@ -45,4 +45,8 @@ func main() {
 	fmt.Println("\n\n ======= INSERTION SORT =========")
 	fmt.Println("\n ---> unsorted <--- \n\n", slice)
 	fmt.Println("\n --->  sorted  <---\n\n", sort.InsertionSort(slice))
+
+	fmt.Println("\n\n ======= BUBBLE SORT =========")
+	fmt.Println("\n ---> unsorted <--- \n\n", slice)
+	fmt.Println("\n --->  sorted  <---\n\n", sort.BubbleSort(slice))
 }
