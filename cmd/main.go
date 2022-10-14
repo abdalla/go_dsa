@@ -53,4 +53,8 @@ func main() {
 	fmt.Println("\n\n ======= SELECTION SORT =========")
 	fmt.Println("\n ---> unsorted <--- \n\n", slice)
 	fmt.Println("\n --->  sorted  <---\n\n", sort.SelectionSort(slice))
+
+	fmt.Println("\n\n ======= QUICK SORT =========")
+	fmt.Println("\n ---> unsorted <--- \n\n", slice)
+	fmt.Println("\n --->  sorted  <---\n\n", sort.QuickSort(slice, 0, len(slice)-1))
 }
