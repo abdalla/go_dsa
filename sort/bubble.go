@@ -5,14 +5,16 @@ package sort
 
 func BubbleSort(slice []int) []int {
 	size := len(slice)
+	sorted := []int{}
+	sorted = append(sorted, slice...) //smalltrick
 
 	for i := 0; i < size-1; i++ {
 		for j := 0; j < size-1; j++ {
-			if slice[j] > slice[j+1] {
-				slice[j], slice[j+1] = slice[j+1], slice[j]
+			if sorted[j] > sorted[j+1] {
+				sorted[j], sorted[j+1] = sorted[j+1], sorted[j]
 			}
 		}
 	}
 
-	return slice
+	return sorted
 }

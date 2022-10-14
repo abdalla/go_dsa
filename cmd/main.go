@@ -49,4 +49,8 @@ func main() {
 	fmt.Println("\n\n ======= BUBBLE SORT =========")
 	fmt.Println("\n ---> unsorted <--- \n\n", slice)
 	fmt.Println("\n --->  sorted  <---\n\n", sort.BubbleSort(slice))
+
+	fmt.Println("\n\n ======= SELECTION SORT =========")
+	fmt.Println("\n ---> unsorted <--- \n\n", slice)
+	fmt.Println("\n --->  sorted  <---\n\n", sort.SelectionSort(slice))
 }
