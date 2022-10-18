@@ -86,3 +86,30 @@ func TestBinarySearch100(t *testing.T) {
 		t.Errorf("got %v, want %v", got, want)
 	}
 }
+
+func TestBinarySearchEmptySlice(t *testing.T) {
+
+	want, got := false, search.BinarySearch([]int{}, 100)
+
+	if got != want {
+		t.Errorf("got %v, want %v", got, want)
+	}
+}
+
+func TestBinarySearchOneElementNotFound(t *testing.T) {
+
+	want, got := false, search.BinarySearch([]int{10}, 1)
+
+	if got != want {
+		t.Errorf("got %v, want %v", got, want)
+	}
+}
+
+func TestBinarySearchOneElementFound(t *testing.T) {
+
+	want, got := true, search.BinarySearch([]int{10}, 10)
+
+	if got != want {
+		t.Errorf("got %v, want %v", got, want)
+	}
+}

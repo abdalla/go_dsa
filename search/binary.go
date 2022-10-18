@@ -2,6 +2,10 @@
 package search
 
 func BinarySearch(slice []int, item int) bool {
+	if len(slice) <= 0 {
+		return false
+	}
+
 	mid := len(slice) / 2
 
 	selected := slice[mid]
