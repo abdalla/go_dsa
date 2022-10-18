@@ -1,4 +1,4 @@
-package sort_test
+package test
 
 import (
 	"reflect"
@@ -7,9 +7,9 @@ import (
 	"github.com/abdalla/go_dsa/sort"
 )
 
-func TestSelectionSortAlreadySorted(t *testing.T) {
+func TestInsertionSortAlreadySorted(t *testing.T) {
 
-	got := sort.SelectionSort(alreadySorted)
+	got := sort.InsertionSort(alreadySorted)
 	want := alreadySorted
 
 	if len(got) != len(want) {
@@ -22,9 +22,9 @@ func TestSelectionSortAlreadySorted(t *testing.T) {
 
 }
 
-func TestSelectionSortInversed(t *testing.T) {
+func TestInsertionSortInversed(t *testing.T) {
 
-	got := sort.SelectionSort(inversed)
+	got := sort.InsertionSort(inversed)
 	want := inversedSorted
 
 	if len(got) != len(want) {
@@ -36,9 +36,9 @@ func TestSelectionSortInversed(t *testing.T) {
 	}
 }
 
-func TestSelectionSortRepeated(t *testing.T) {
+func TestInsertionSortRepeated(t *testing.T) {
 
-	got := sort.SelectionSort(repeated)
+	got := sort.InsertionSort(repeated)
 	want := repeatedSorted
 
 	if len(got) != len(want) {

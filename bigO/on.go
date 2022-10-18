@@ -1,7 +1,6 @@
 package bigo
 
-func BigOn(studentList []string) {
-
+func BigOn(studentList []string) error {
 	// LINEAR
 	// O(n) == worst case - 5 times
 	for _, student := range studentList {
@@ -10,4 +9,6 @@ func BigOn(studentList []string) {
 			break
 		}
 	}
+
+	return nil
 }

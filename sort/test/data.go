@@ -1,4 +1,4 @@
-package sort_test
+package test
 
 var (
 	alreadySorted  = []int{1, 2, 3, 4, 5, 6, 9, 20, 22, 23, 28, 32, 34, 39, 40, 42, 76, 87, 99, 112}

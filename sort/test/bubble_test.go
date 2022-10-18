@@ -1,4 +1,4 @@
-package sort_test
+package test
 
 import (
 	"reflect"
@@ -7,9 +7,9 @@ import (
 	"github.com/abdalla/go_dsa/sort"
 )
 
-func TestInsertionSortAlreadySorted(t *testing.T) {
+func TestBubbleSortAlreadySorted(t *testing.T) {
 
-	got := sort.InsertionSort(alreadySorted)
+	got := sort.BubbleSort(alreadySorted)
 	want := alreadySorted
 
 	if len(got) != len(want) {
@@ -22,9 +22,9 @@ func TestInsertionSortAlreadySorted(t *testing.T) {
 
 }
 
-func TestInsertionSortInversed(t *testing.T) {
+func TestBubbleSortInversed(t *testing.T) {
 
-	got := sort.InsertionSort(inversed)
+	got := sort.BubbleSort(inversed)
 	want := inversedSorted
 
 	if len(got) != len(want) {
@@ -36,9 +36,9 @@ func TestInsertionSortInversed(t *testing.T) {
 	}
 }
 
-func TestInsertionSortRepeated(t *testing.T) {
+func TestBubbleSortRepeated(t *testing.T) {
 
-	got := sort.InsertionSort(repeated)
+	got := sort.BubbleSort(repeated)
 	want := repeatedSorted
 
 	if len(got) != len(want) {
