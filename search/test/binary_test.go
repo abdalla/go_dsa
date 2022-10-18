@@ -113,3 +113,12 @@ func TestBinarySearchOneElementFound(t *testing.T) {
 		t.Errorf("got %v, want %v", got, want)
 	}
 }
+
+func TestBinarySearchTwoElementFound(t *testing.T) {
+
+	want, got := true, search.BinarySearch([]int{10, 20}, 20)
+
+	if got != want {
+		t.Errorf("got %v, want %v", got, want)
+	}
+}
