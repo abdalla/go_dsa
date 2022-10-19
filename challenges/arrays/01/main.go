@@ -31,7 +31,6 @@ import (
 	"fmt"
 	"io/ioutil"
 	"runtime"
-	"sync"
 	"time"
 )
 
@@ -39,53 +38,72 @@ type Data struct {
 	Items []int `json:"items"`
 }
 
-func setDuplicateIndex(a []int, seen []int, index int) []int {
-	var wg sync.WaitGroup
+func setDuplicateIndex(a []int, seen []int, index int, c chan bool) {
+	// var wg sync.WaitGroup
 	size := len(a)
+
+	// exists := make(chan bool)
+	exists := false
 
 	if size == 2 {
 		if a[0] == a[1] {
 			seen[1] = 1
+			exists = true
 		}
 
-		return seen
+		// return seen, exists
 	}
 
 	for i := range a {
 		if seen[index+i] == 1 {
-			return seen
+			exists = true
+			break
+			// return seen, exists
 		}
 
 		j := index + i + 1
-		wg.Add(1)
-		go func(item int) {
-			defer wg.Done()
+		// wg.Add(1)
+		//channel := make(chan bool)
 
-			for ; j < size; j++ {
-				if seen[j] == 1 {
-					break
-				}
-
-				if item == a[j] {
-					seen[j] = 1
-					break
-				}
+		//go func(item int, cx chan bool) {
+		for ; j < size; j++ {
+			if seen[j] == 1 {
+				exists = true
+				break
 			}
-		}(a[i])
 
+			if a[i] == a[j] {
+				seen[j] = 1
+				exists = true
+				break
+			}
+		}
+
+		//cx <- exists
+		//}(a[i], channel)
+
+		//exists = <-channel
 	}
 
-	wg.Wait()
+	// wg.Wait()
 
-	return seen
+	c <- exists
+
+	// return seen, exists
 }
 
+//func solution3(a []int) int {
+//
+//}
+
 func solution2(a []int) int {
-	runtime.Gosched()
+	// runtime.Gosched()
 
 	size := len(a)
 	mid := size / 2
 	seen := make([]int, size, size)
+	exists := make(chan bool)
+	exists2 := make(chan bool)
 
 	if size == 2 {
 		if a[0] == a[1] {
@@ -95,75 +113,84 @@ func solution2(a []int) int {
 		return -1
 	}
 
-	var wg sync.WaitGroup
+	// var wg sync.WaitGroup
 
-	wg.Add(2)
+	// wg.Add(2)
 
-	go func() {
-		defer wg.Done()
-		seen = setDuplicateIndex(a[:mid], seen, 0)
-	}()
+	// go func() {
+	// defer wg.Done()
+	go setDuplicateIndex(a[:mid], seen, 0, exists)
+	// }()
 
-	go func() {
-		defer wg.Done()
-		seen = setDuplicateIndex(a[mid:], seen, mid)
-	}()
+	// go func() {
+	// defer wg.Done()
+	go setDuplicateIndex(a[mid:], seen, mid, exists2)
+	// }()
 
-	wg.Wait()
+	// wg.Wait()
 
-	seen = setDuplicateIndex(a, seen, 0)
+	has1, has2 := <-exists, <-exists2
 
-	for i := range seen {
-		if seen[i] == 1 {
-			return a[i]
-		}
+	if !has1 {
+		x := make(chan bool)
+		go setDuplicateIndex(a, seen, 0, x)
+
+		has1 = <-x
 	}
 
-	return -1
-}
-
-func solution(a []int) int {
-
-	// runtime.GOMAXPROCS(runtime.NumCPU())
-	fmt.Println(runtime.GOMAXPROCS(runtime.NumCPU()))
-
-	size := len(a)
-	seen := make([]int, size, size)
-
-	if size == 2 {
-		if a[0] == a[1] {
-			return a[0]
-		}
-
-		return -1
-	}
-
-	for i := range a {
-		if seen[i] == 1 {
-			return a[i]
-		}
-
-		j := i + 1
-		go func(item int) {
-			for ; j < size; j++ {
-				if seen[j] == 1 {
-					break
-				}
-
-				if item == a[j] {
-					seen[j] = 1
-					break
-				}
+	if has1 || has2 {
+		for i := range seen {
+			if seen[i] == 1 {
+				return a[i]
 			}
-		}(a[i])
-
-		if size < 5000 {
-			time.Sleep(500 * time.Nanosecond)
 		}
 	}
 
 	return -1
 }
+
+//func solution(a []int) int {
+//
+//	// runtime.GOMAXPROCS(runtime.NumCPU())
+//	fmt.Println(runtime.GOMAXPROCS(runtime.NumCPU()))
+//
+//	size := len(a)
+//	seen := make([]int, size, size)
+//
+//	if size == 2 {
+//		if a[0] == a[1] {
+//			return a[0]
+//		}
+//
+//		return -1
+//	}
+//
+//	for i := range a {
+//		if seen[i] == 1 {
+//			return a[i]
+//		}
+//
+//		j := i + 1
+//		go func(item int) {
+//			for ; j < size; j++ {
+//				if seen[j] == 1 {
+//					break
+//				}
+//
+//				if item == a[j] {
+//					seen[j] = 1
+//					break
+//				}
+//			}
+//		}(a[i])
+//
+//		if size < 5000 {
+//			time.Sleep(500 * time.Nanosecond)
+//		}
+//	}
+//
+//	return -1
+//}
 
 func main() {
 	runtime.GOMAXPROCS(runtime.NumCPU())
@@ -173,13 +200,13 @@ func main() {
 
 	_ = json.Unmarshal([]byte(file), &data)
 
-	// data = Data{
-	// 	Items: []int{2, 1, 3, 5, 3, 2},
-	// }
+	//data = Data{
+	//	Items: []int{2, 1, 3, 5, 3, 2},
+	//}
 
-	// data = Data{
-	// 	Items: []int{28, 19, 13, 6, 34, 48, 50, 3, 47, 18, 15, 34, 16, 11, 13, 3, 2, 4, 46, 6, 7, 3, 18, 9, 32, 21, 3, 21, 50, 10, 45, 13, 22, 1, 27, 18, 3, 27, 30, 44, 12, 30, 40, 1, 1, 31, 6, 18, 33, 5},
-	// }
+	//data = Data{
+	//	Items: []int{28, 19, 13, 6, 34, 48, 50, 3, 47, 18, 15, 34, 16, 11, 13, 3, 2, 4, 46, 6, 7, 3, 18, 9, 32, 21, 3, 21, 50, 10, 45, 13, 22, 1, 27, 18, 3, 27, 30, 44, 12, 30, 40, 1, 1, 31, 6, 18, 33, 5},
+	//}
 
 	now := time.Now()
 
