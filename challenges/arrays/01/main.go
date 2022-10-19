@@ -39,47 +39,17 @@ type Data struct {
 	Items []int `json:"items"`
 }
 
-// [2, 1, 3, 5, 3, 2]
-// [2, 1, 3] [5, 3, 2]
-
-// [2, 1, 3] => tem repedido? Nano
-// [2] - [5, 3, 2] ==> tem repetido? sim seen[i] = 1
-// [1] - [5, 3, 2] ==> tem repetido? nao
-// [3] - [5, 3, 2] ==> tem repetido? sim seen[i] = 1
-
-// seen[i] == 1
-var wg sync.WaitGroup
-
-func setDuplicateIndex2(a []int, seen []int, index int) []int {
+func setDuplicateIndex(a []int, seen []int, index int) []int {
+	var wg sync.WaitGroup
 	size := len(a)
-	mid := size / 2
 
 	if size == 2 {
 		if a[0] == a[1] {
-			seen[index] = 1
-			return seen
+			seen[1] = 1
 		}
+
+		return seen
 	}
-
-	go func() {
-		wg.Add(1)
-		defer wg.Done()
-		seen = setDuplicateIndex2(a[:mid], seen, 0)
-	}()
-
-	go func() {
-		wg.Add(1)
-		defer wg.Done()
-		seen = setDuplicateIndex2(a[mid:], seen, mid)
-	}()
-
-	wg.Wait()
-
-	return seen
-}
-
-func setDuplicateIndex(a []int, seen []int, index int) []int {
-	size := len(a)
 
 	for i := range a {
 		if seen[index+i] == 1 {
@@ -87,30 +57,48 @@ func setDuplicateIndex(a []int, seen []int, index int) []int {
 		}
 
 		j := index + i + 1
-		// go func(item int) {
-		for ; j < size; j++ {
-			if seen[j] == 1 {
-				break
-			}
+		wg.Add(1)
+		go func(item int) {
+			defer wg.Done()
 
-			if a[i] == a[j] {
-				seen[j] = 1
-				break
+			for ; j < size; j++ {
+				if seen[j] == 1 {
+					break
+				}
+
+				if item == a[j] {
+					seen[j] = 1
+					break
+				}
 			}
-		}
-		// }(a[i])
+		}(a[i])
+
 	}
+
+	wg.Wait()
 
 	return seen
 }
 
 func solution2(a []int) int {
+	runtime.Gosched()
+
 	size := len(a)
 	mid := size / 2
 	seen := make([]int, size, size)
 
+	if size == 2 {
+		if a[0] == a[1] {
+			return a[0]
+		}
+
+		return -1
+	}
+
 	var wg sync.WaitGroup
+
 	wg.Add(2)
+
 	go func() {
 		defer wg.Done()
 		seen = setDuplicateIndex(a[:mid], seen, 0)
@@ -122,16 +110,8 @@ func solution2(a []int) int {
 	}()
 
 	wg.Wait()
-	// fmt.Println(a, len(a))
-	// fmt.Println(seen, len(seen))
 
-	// wg.Add(1)
-	go func() {
-		// defer wg.Done()
-		seen = setDuplicateIndex(a, seen, 0)
-	}()
-
-	// wg.Wait()
+	seen = setDuplicateIndex(a, seen, 0)
 
 	for i := range seen {
 		if seen[i] == 1 {
@@ -143,6 +123,7 @@ func solution2(a []int) int {
 }
 
 func solution(a []int) int {
+
 	// runtime.GOMAXPROCS(runtime.NumCPU())
 	fmt.Println(runtime.GOMAXPROCS(runtime.NumCPU()))
 
@@ -184,23 +165,6 @@ func solution(a []int) int {
 	return -1
 }
 
-func solution3(a []int) int {
-	size := len(a)
-	seen := make([]int, size, size)
-
-	seen = setDuplicateIndex2(a, seen, 0)
-
-	fmt.Println(seen)
-
-	for i := range seen {
-		if seen[i] == 1 {
-			return a[i]
-		}
-	}
-
-	return -1
-}
-
 func main() {
 	runtime.GOMAXPROCS(runtime.NumCPU())
 	file, _ := ioutil.ReadFile("./challenges/arrays/01/data.json")
@@ -209,9 +173,9 @@ func main() {
 
 	_ = json.Unmarshal([]byte(file), &data)
 
-	data = Data{
-		Items: []int{2, 1, 3, 5, 3, 2},
-	}
+	// data = Data{
+	// 	Items: []int{2, 1, 3, 5, 3, 2},
+	// }
 
 	// data = Data{
 	// 	Items: []int{28, 19, 13, 6, 34, 48, 50, 3, 47, 18, 15, 34, 16, 11, 13, 3, 2, 4, 46, 6, 7, 3, 18, 9, 32, 21, 3, 21, 50, 10, 45, 13, 22, 1, 27, 18, 3, 27, 30, 44, 12, 30, 40, 1, 1, 31, 6, 18, 33, 5},
@@ -219,7 +183,7 @@ func main() {
 
 	now := time.Now()
 
-	fmt.Println(solution3(data.Items))
+	fmt.Println(solution2(data.Items))
 
 	diff := time.Since(now)
 
