@@ -1,5 +1,7 @@
 # Binary Tree
 
+It is a Binary Tree if it has only 0, 1 or 2 childs
+
 ## Types of Binary Tree
 
 ### Full Binary Tree
