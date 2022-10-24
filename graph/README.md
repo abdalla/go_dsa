@@ -20,4 +20,4 @@ Graph is a mathematical structure that represents relationship between objects.
 
 6. Acyclic
 
-![types of graph](./images/types2.jpg "types of graph")
+![types of graph](./images/types2.png "types of graph")
