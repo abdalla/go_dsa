@@ -1,4 +1,4 @@
-package main
+package traversal
 
 import (
 	"fmt"
@@ -7,47 +7,47 @@ import (
 )
 
 // - ROOT > LEFT > RIGHT
-func preorder(t *tree.Tree) (traversal []int) {
+func Preorder(t *tree.Tree) (traversal []int) {
 	if t == nil {
 		return
 	}
 
 	traversal = append(traversal, t.Value)
-	traversal = append(traversal, preorder(t.Left)...)
-	traversal = append(traversal, preorder(t.Right)...)
+	traversal = append(traversal, Preorder(t.Left)...)
+	traversal = append(traversal, Preorder(t.Right)...)
 
 	return
 }
 
 // - LEFT > ROOT > RIGHT
-func inorder(t *tree.Tree) (traversal []int) {
+func Inorder(t *tree.Tree) (traversal []int) {
 	if t == nil {
 		return
 	}
 
-	traversal = append(traversal, inorder(t.Left)...)
+	traversal = append(traversal, Inorder(t.Left)...)
 	traversal = append(traversal, t.Value)
-	traversal = append(traversal, inorder(t.Right)...)
+	traversal = append(traversal, Inorder(t.Right)...)
 
 	return
 }
 
 // - LEFT > RIGHT > ROOT
-func postorder(t *tree.Tree) (traversal []int) {
+func Postorder(t *tree.Tree) (traversal []int) {
 	if t == nil {
 		return
 	}
 
-	traversal = append(traversal, postorder(t.Left)...)
-	traversal = append(traversal, postorder(t.Right)...)
+	traversal = append(traversal, Postorder(t.Left)...)
+	traversal = append(traversal, Postorder(t.Right)...)
 	traversal = append(traversal, t.Value)
 
 	return
 }
 
-func main() {
+func dfs() {
 	t := tree.CreateBinaryTree()
-	fmt.Printf("%v \n", preorder(t))
-	fmt.Printf("%v \n", inorder(t))
-	fmt.Printf("%v \n", postorder(t))
+	fmt.Printf("%v \n", Preorder(t))
+	fmt.Printf("%v \n", Inorder(t))
+	fmt.Printf("%v \n", Postorder(t))
 }
