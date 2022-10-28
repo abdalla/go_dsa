@@ -1,9 +1,9 @@
 package tree
 
 type Tree struct {
-	Left  *Tree
-	Right *Tree
-	Value int
+	Left  *Tree `json:"left"`
+	Right *Tree `json:"right"`
+	Value int   `json:"value"`
 }
 
 func CreateBinaryTree() *Tree {
