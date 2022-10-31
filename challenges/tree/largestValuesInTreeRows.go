@@ -51,11 +51,12 @@
 
 // An array of the largest values in each row of t.
 
-package traversal
+package tree
 
 import (
-	"github.com/abdalla/go_dsa/tree"
 	"math"
+
+	"github.com/abdalla/go_dsa/tree"
 )
 
 func LargestValuesInTreeRows(root *tree.Tree) (result []int) {

@@ -1,10 +1,10 @@
-package traversal_test
+package tree_test
 
 import (
 	"reflect"
 	"testing"
 
-	"github.com/abdalla/go_dsa/challenges/tree/traversal"
+	tr "github.com/abdalla/go_dsa/challenges/tree"
 	"github.com/abdalla/go_dsa/tree"
 	"github.com/segmentio/encoding/json"
 )
@@ -23,7 +23,7 @@ func TestLargestValuesInTreeRows(t *testing.T) {
 		},
 	}
 
-	got := traversal.LargestValuesInTreeRows(bt)
+	got := tr.LargestValuesInTreeRows(bt)
 	want := []int{-1, 7, 1}
 
 	if len(got) != len(want) {
@@ -73,7 +73,7 @@ func TestLargestValuesInTreeRows2(t *testing.T) {
 		t.FailNow()
 	}
 
-	got := traversal.LargestValuesInTreeRows(&bt)
+	got := tr.LargestValuesInTreeRows(&bt)
 	want := []int{-1, 7, 1, 10}
 
 	if len(got) != len(want) {
