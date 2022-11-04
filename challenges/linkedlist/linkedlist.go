@@ -117,3 +117,29 @@ func (ll *LinkedList) Add(index, value int) {
 
 	ll.Size++
 }
+
+func (ll *LinkedList) Delete(index int) {
+	if index < 0 || index > ll.Size {
+		return
+	}
+
+	if index == 0 {
+		ll.Head.Next.Previus = nil
+		ll.Head = ll.Head.Next
+	} else if index == ll.Size {
+		ll.Tail.Previus.Next = nil
+		ll.Tail = ll.Tail.Previus
+	} else {
+		current := ll.GetNode(index - 1)
+		current.Next = current.Next.Next
+		current.Next.Previus = current
+	}
+
+	ll.Size--
+
+	if ll.Size == 0 {
+		ll.Tail = nil
+		ll.Head = nil
+	}
+
+}

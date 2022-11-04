@@ -194,3 +194,133 @@ func TestAdd(t *testing.T) {
 	}
 
 }
+
+func TestDeleteInvalidIndexGreaterThanSize(t *testing.T) {
+	ll := getInitialData()
+	want := getInitialData()
+
+	ll.Delete(7)
+
+	if want.Size != ll.Size {
+		t.Errorf("want: %v got: %v", want.Size, ll.Size)
+	}
+
+	if want.Head.Value != ll.Head.Value {
+		t.Errorf("want: %v got: %v", want.Head.Value, ll.Head.Value)
+	}
+
+	if want.Tail.Value != ll.Tail.Value {
+		t.Errorf("want: %v got: %v", want.Tail.Value, ll.Tail.Value)
+	}
+
+}
+
+func TestDeleteInvalidIndexLessThanZero(t *testing.T) {
+	ll := getInitialData()
+	want := getInitialData()
+
+	ll.Delete(-1)
+
+	if want.Size != ll.Size {
+		t.Errorf("want: %v got: %v", want.Size, ll.Size)
+	}
+
+	if want.Head.Value != ll.Head.Value {
+		t.Errorf("want: %v got: %v", want.Head.Value, ll.Head.Value)
+	}
+
+	if want.Tail.Value != ll.Tail.Value {
+		t.Errorf("want: %v got: %v", want.Tail.Value, ll.Tail.Value)
+	}
+
+}
+
+func TestDeleteHead(t *testing.T) {
+	ll := getInitialData()
+	want := getInitialData()
+
+	ll.Delete(0)
+
+	if want.Size <= ll.Size {
+		t.Errorf("want: %v got: %v", want.Size, ll.Size)
+	}
+
+	if want.Head.Value == ll.Head.Value {
+		t.Errorf("want: %v got: %v", want.Head.Value, ll.Head.Value)
+	}
+
+	if want.Tail.Value != ll.Tail.Value {
+		t.Errorf("want: %v got: %v", want.Tail.Value, ll.Tail.Value)
+	}
+
+	// currentWanted := want.GetNode(index)
+	currentGot := ll.GetNode(0)
+
+	if currentGot.Value != 2 {
+		t.Errorf("want: %v got: %v", 2, currentGot.Value)
+	}
+
+}
+
+func TestDeleteTail(t *testing.T) {
+	ll := getInitialData()
+	want := getInitialData()
+
+	ll.Delete(6)
+
+	if want.Size <= ll.Size {
+		t.Errorf("want: %v got: %v", want.Size, ll.Size)
+	}
+
+	if want.Head.Value != ll.Head.Value {
+		t.Errorf("want: %v got: %v", want.Head.Value, ll.Head.Value)
+	}
+
+	if want.Tail.Value == ll.Tail.Value {
+		t.Errorf("want: %v got: %v", want.Tail.Value, ll.Tail.Value)
+	}
+
+	// currentWanted := want.GetNode(index)
+	currentGot := ll.GetNode(6)
+	if currentGot != nil {
+		t.Errorf("want: %v got: %v", nil, currentGot.Value)
+	}
+
+	val := ll.Get(4)
+	if val != 5 {
+		t.Errorf("want: %v got: %v", 5, val)
+	}
+
+}
+
+func TestDelete(t *testing.T) {
+	index := 3
+
+	ll := getInitialData()
+	want := getInitialData()
+
+	ll.Delete(index)
+
+	if want.Size <= ll.Size {
+		t.Errorf("want: %v got: %v", want.Size, ll.Size)
+	}
+
+	if want.Head.Value != ll.Head.Value {
+		t.Errorf("want: %v got: %v", want.Head.Value, ll.Head.Value)
+	}
+
+	if want.Tail.Value != ll.Tail.Value {
+		t.Errorf("want: %v got: %v", want.Tail.Value, ll.Tail.Value)
+	}
+
+	// currentWanted := want.GetNode(index)
+	currentGot := ll.GetNode(index)
+	if currentGot == nil {
+		t.Errorf("want: %v got: %v", 4, currentGot.Value)
+	}
+
+	if currentGot.Value != 5 {
+		t.Errorf("want: %v got: %v", 4, currentGot.Value)
+	}
+
+}
