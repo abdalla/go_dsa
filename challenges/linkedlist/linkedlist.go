@@ -6,18 +6,12 @@ type Node struct {
 	Value   int
 }
 
+// Double LL
 type LinkedList struct {
 	Head *Node
 	Tail *Node
 	Size int
 }
-
-// [5, 6, 7, 8]
-//GET INDEX
-//ADD HEAD
-//ADD TAIL
-//ADD INDEX
-//DELETE INDEX
 
 func (ll *LinkedList) GetNode(index int) *Node {
 	if index < 0 || index > ll.Size {
