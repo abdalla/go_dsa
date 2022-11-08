@@ -1,24 +1,20 @@
 // Given preorder and inorder traversal of a tree, construct the binary tree.
 package tree
 
-type Tree struct {
-	Left  *Tree
-	Right *Tree
-	Value int
-}
+import "github.com/abdalla/go_dsa/tree"
 
-func helper(preorder []int, inorder []int, current *int, low, high int) *Tree {
+func helper(preorder []int, inorder []int, current *int, low, high int) *tree.Tree {
 	if low > high {
 		return nil
 	}
 
 	if low == high {
-		root := &Tree{Value: preorder[*current]}
+		root := &tree.Tree{Value: preorder[*current]}
 		(*current)++
 		return root
 	}
 
-	root := &Tree{Value: preorder[*current]}
+	root := &tree.Tree{Value: preorder[*current]}
 	rootValue := preorder[*current]
 	(*current)++
 
@@ -35,7 +31,7 @@ func helper(preorder []int, inorder []int, current *int, low, high int) *Tree {
 	return root
 }
 
-func BuildTree(preorder []int, inorder []int) *Tree {
+func BuildTree(preorder []int, inorder []int) *tree.Tree {
 
 	lenOfTree := len(preorder)
 
