@@ -80,6 +80,6 @@ package tree
 
 import "github.com/abdalla/go_dsa/tree"
 
-func DifitTreeSum(t *tree.Tree) {
+func DigitTreeSum(t *tree.Tree) {
 
 }
