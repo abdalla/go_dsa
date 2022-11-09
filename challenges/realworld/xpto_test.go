@@ -6,8 +6,6 @@ import (
 	"github.com/abdalla/go_dsa/challenges/realworld"
 )
 
-// [Folder(0, [7, 3], “abc”), Folder(0, [], “xyz”), Folder(8, [], “def”), Folder(7, [9], “ijk), Folder(9, [], “lmn”)]
-
 func getFolders() []realworld.Folder {
 	folders := make([]realworld.Folder, 0)
 	folders = append(folders, realworld.Folder{

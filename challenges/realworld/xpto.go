@@ -54,7 +54,6 @@ func getPath(path int, folder Folder) string {
 	return ""
 }
 
-// input = data: [Folder(0, [7, 3], “abc”), Folder(0, [], “xyz”), Folder(8, [], “def”), Folder(7, [9], “ijk), Folder(9, [], “lmn”)]
 func PrintPath(path int, nodes []Folder) string {
 	folders = append(folders, nodes...)
 
