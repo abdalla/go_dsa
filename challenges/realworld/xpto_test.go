@@ -8,16 +8,17 @@ import (
 
 func getFolders() []realworld.Folder {
 	folders := make([]realworld.Folder, 0)
+
+	// folders = append(folders, realworld.Folder{
+	// 	Id:         0,
+	// 	Subfolders: []int{},
+	// 	Name:       "xyz",
+	// })
+
 	folders = append(folders, realworld.Folder{
 		Id:         0,
 		Subfolders: []int{7, 3},
 		Name:       "abc",
-	})
-
-	folders = append(folders, realworld.Folder{
-		Id:         0,
-		Subfolders: []int{},
-		Name:       "xyz",
 	})
 
 	folders = append(folders, realworld.Folder{
@@ -61,10 +62,26 @@ func TestPath8(t *testing.T) {
 
 func TestPath7(t *testing.T) {
 	got := realworld.PrintPath(7, getFolders())
-	want := ""
+	want := "abc -> ijk"
 
 	if got != want {
 		t.Errorf("want: %+v got: %+v", want, got)
+	}
+}
+
+func TestPath9and7(t *testing.T) {
+	got9 := realworld.PrintPath(9, getFolders())
+	want9 := "abc -> ijk -> lmn"
+
+	got7 := realworld.PrintPath(7, getFolders())
+	want7 := "abc -> ijk"
+
+	if got9 != want9 {
+		t.Errorf("want: %+v got: %+v", want9, got9)
+	}
+
+	if got7 != want7 {
+		t.Errorf("want: %+v got: %+v", want7, got7)
 	}
 }
 

@@ -15,11 +15,17 @@ type Folder struct {
 var (
 	results = make(map[int]string)
 	folders = make([]Folder, 0)
+	nodes   = make(map[int]Folder)
 )
 
-func getNode(id int) *Folder {
+func getFolder(id int) *Folder {
+	if folder, has := nodes[id]; has {
+		return &folder
+	}
+
 	for _, folder := range folders {
 		if folder.Id == id {
+			nodes[id] = folder
 			return &folder
 		}
 	}
@@ -27,63 +33,58 @@ func getNode(id int) *Folder {
 	return nil
 }
 
-func getPath(path int, folder Folder) string {
-	if v, exist := results[path]; exist {
+func getPath(folderId int, folder Folder) string {
+	if v, exist := results[folderId]; exist {
 		return v
 	}
 
-	if slices.Contains(folder.Subfolders, path) {
-		if results[path] != "" {
-			return fmt.Sprintf("%s -> %s", results[path], folder.Name)
-		}
-
-		if folder.Id != 0 {
-			return folder.Name
-		}
-
-		return ""
+	if slices.Contains(folder.Subfolders, folderId) {
+		return folder.Name
 	}
 
 	for _, subFolderId := range folder.Subfolders {
-		node := getNode(subFolderId)
+		node := getFolder(subFolderId)
 		if node != nil {
-			return getPath(path, *node)
+			results[node.Id] = fmt.Sprintf("%s -> %s", folder.Name, getPath(folderId, *node))
+			return results[node.Id]
 		}
 	}
 
 	return ""
 }
 
-func PrintPath(path int, nodes []Folder) string {
+func PrintPath(folderId int, nodes []Folder) string {
 	folders = append(folders, nodes...)
 
-	if path <= 0 {
+	if folderId <= 0 {
 		return ""
 	}
 
-	if v, exist := results[path]; exist {
+	if v, exist := results[folderId]; exist {
 		return v
 	}
 
-	lastNode := getNode(path)
-	if lastNode == nil {
+	desiredFolder := getFolder(folderId)
+	if desiredFolder == nil {
 		return ""
 	}
 
 	for _, folder := range folders {
 		if folder.Id == 0 {
-			p := getPath(path, folder)
+			p := getPath(folderId, folder)
 
 			if p != "" {
-				results[path] = fmt.Sprintf("%s -> %s", folder.Name, p)
+				results[folderId] = p
 				break
 			}
 		}
 	}
 
-	if results[path] != "" {
-		results[path] = fmt.Sprintf("%s -> %s", results[path], lastNode.Name)
+	if results[folderId] != "" {
+		results[folderId] = fmt.Sprintf("%s -> %s", results[folderId], desiredFolder.Name)
 	}
 
-	return results[path]
+	fmt.Printf("%+v \n", results)
+
+	return results[folderId]
 }
