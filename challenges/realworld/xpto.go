@@ -45,8 +45,12 @@ func getPath(folderId int, folder Folder) string {
 	for _, subFolderId := range folder.Subfolders {
 		node := getFolder(subFolderId)
 		if node != nil {
-			results[node.Id] = fmt.Sprintf("%s -> %s", folder.Name, getPath(folderId, *node))
-			return results[node.Id]
+			p := getPath(folderId, *node)
+			if p != "" {
+				results[node.Id] = fmt.Sprintf("%s -> %s", folder.Name, p)
+				return results[node.Id]
+			}
+			return ""
 		}
 	}
 
