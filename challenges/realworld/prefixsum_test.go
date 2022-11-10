@@ -23,17 +23,38 @@ func TestPrefixSum(t *testing.T) {
 	}
 }
 
-func TestSum2Elements1and3(t *testing.T) {
-	el1 := 1
-	el2 := 3
+// func TestSum2Elements1and3(t *testing.T) {
+// 	el1 := 1
+// 	el2 := 3
 
-	arr := []int{10, 20, 10, 5, 15}
-	ps := realworld.PrefixSum(arr)
+// 	idx1 := el1 - 1
+// 	idx2 := el2 - 1
 
-	want := arr[el1] + arr[el2]
-	got := ps[el2] - ps[el1-1]
+// 	arr := []int{10, 20, 10, 5, 15}
+// 	ps := realworld.PrefixSum(arr) //=> {10, 30, 40, 45, 60}
 
-	if got != want {
-		t.Errorf("got %+v, wanted %+v", got, want)
-	}
-}
+// 	want := arr[idx1] + arr[idx2] //==> 10 + 10 = 20
+// 	got := ps[idx2] - ps[idx2-1] //=> 40 - 20 = 20
+
+// 	if got != want {
+// 		t.Errorf("got %+v, wanted %+v", got, want)
+// 	}
+// }
+
+// func TestSum2Elements1and2(t *testing.T) {
+// 	el1 := 1
+// 	el2 := 2
+
+// 	idx1 := el1 - 1
+// 	idx2 := el2 - 1
+
+// 	arr := []int{10, 20, 10, 5, 15}
+// 	ps := realworld.PrefixSum(arr)
+
+// 	want := arr[idx1] + arr[idx2]
+// 	got := ps[idx2] - ps[el1-1]
+
+// 	if got != want {
+// 		t.Errorf("got %+v, wanted %+v", got, want)
+// 	}
+// }
